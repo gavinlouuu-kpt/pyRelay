@@ -1,5 +1,5 @@
-ZS-Relay-lib.py
 setup.py
+zsrelay.py
 zs_relay.egg-info/PKG-INFO
 zs_relay.egg-info/SOURCES.txt
 zs_relay.egg-info/dependency_links.txt

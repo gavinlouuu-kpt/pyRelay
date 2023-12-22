@@ -28,7 +28,7 @@ class ZsRelay:
         response = self.serialPort.read(self.serialPort.in_waiting)
         return response
     
-    def switchCommand(self, relayAddress: int, relayState: int) -> bytes:
+    def _genCom(self, relayAddress: int, relayState: int) -> bytes:
         devicePosition = self.devPos.to_bytes(1, byteorder='big')
         relayAddress = relayAddress.to_bytes(2, byteorder='big')
         relayState = relayState.to_bytes(2, byteorder='big')
@@ -38,6 +38,16 @@ class ZsRelay:
         crc_result = struct.pack("<H", crc_result)
         full_command = command + crc_result
         return full_command
+    
+    def turnOnRelay(self, relayAddress: int) -> bytes:
+        command = self._genCom(relayAddress, 1)
+        response = self.writeByte(command)
+        return command, response
+    
+    def turnOffRelay(self, relayAddress: int) -> bytes:
+        command = self._genCom(relayAddress, 0)
+        response = self.writeByte(command)
+        return command, response
 
 # def _openSerial(COM: str):
 #     serialPort = serial.Serial(COM, 38400, timeout=1)
